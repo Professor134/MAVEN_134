@@ -13,15 +13,16 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 public class Family implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    private String status = "Active";
 }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
    @Autowired
@@ -20,6 +21,7 @@ public class UserController {
    public ResponseEntity<?> registerUser(@RequestBody User user) {
        try {
            User savedUser = userService.registerUser(user);
+            // log.info(format:"recive data{}",user);
            return ResponseEntity.ok(savedUser);  // Return HTTP 200 OK with user data
        } catch (Exception e) {     //it return error message
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed: " + e.getMessage());
