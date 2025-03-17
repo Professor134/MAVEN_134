@@ -46,17 +46,17 @@ public class User {
     @Column // This field is not stored in the database
     private String family_name;
 
-    public void setPassword(String rawPassword) {
-        this.password = new BCryptPasswordEncoder().encode(rawPassword);
-    }
+    // public void setPassword(String rawPassword) {
+    //     this.password = new BCryptPasswordEncoder().encode(rawPassword);
+    // }
 
-    public boolean isPasswordMatch(String rawPassword) {
-        return new BCryptPasswordEncoder().matches(rawPassword, this.password);
-    }
+    // public boolean isPasswordMatch(String rawPassword) {
+    //     return new BCryptPasswordEncoder().matches(rawPassword, this.password);
+    // }
 
-    public void setFamilyName (String family_name, FamilyRepository familyRepository)  {
-        this.family_name = family_name;
-        this.family = familyRepository.findByname(family_name).orElseThrow(() -> new RuntimeException("Family not found: " + family_name));
-        // this.family = foundFamily;
-    }
+    // public void setFamilyName (String family_name, FamilyRepository familyRepository)  {
+    //     this.family_name = family_name;
+    //     this.family = familyRepository.findByname(family_name).orElseThrow(() -> new RuntimeException("Family not found: " + family_name));
+    //     // this.family = foundFamily;
+    // }
 }

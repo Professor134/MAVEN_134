@@ -43,13 +43,16 @@ public class AuthController {
         User user = userOptional.get();
 
         // Check given password matches the hashed password in the db
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        // if (!passwordEncoder.matches(password, user.getPassword()))
+        if (!password.equals(user.getPassword()))
+        {
             return ResponseEntity.status(401).body("Invalid Password");
         }
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", user.getRole());
         claims.put("id", user.getId());
+        claims.put("email", user.getEmail());
+        claims.put("role", user.getRole());
         claims.put("family_name", user.getFamily_name());
         claims.put("contactNumber", user.getContactNumber());
 
@@ -57,8 +60,9 @@ public class AuthController {
 
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
-        response.put("role", user.getRole());
         response.put("id", String.valueOf(user.getId()));
+        response.put("email", user.getEmail());
+        response.put("role", user.getRole());
         response.put("family_name", user.getFamily_name());
         response.put("contactNumber", user.getContactNumber());
 
