@@ -48,10 +48,6 @@ public class JwtUtil {
         return extractAllClaims(token).get("role", String.class);
     }
 
-    public String extractUserEmail(String token) {
-        return extractAllClaims(token).get("email", String.class);
-    }
-
     public Long extractUserId(String token) {
         return extractAllClaims(token).get("id", Long.class);
     }
@@ -64,7 +60,7 @@ public class JwtUtil {
         return extractAllClaims(token).get("contactNumber", String.class);
     }
 
-    // Validate token (Check signature + expiration)
+    // Validity check
     public boolean validateToken(String token) {
         try {
             Claims claims = extractAllClaims(token);

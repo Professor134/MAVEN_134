@@ -3,8 +3,6 @@ package in.starmaven.wealthwise.controller;
 import in.starmaven.wealthwise.security.JwtUtil;
 import in.starmaven.wealthwise.entity.User;
 import in.starmaven.wealthwise.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -20,13 +18,12 @@ public class AuthController {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public AuthController(JwtUtil jwtUtil, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @PostMapping("/login")
@@ -42,9 +39,12 @@ public class AuthController {
 
         User user = userOptional.get();
 
+        System.out.println("Raw password: " + password);
+        System.out.println("Encoded password from DB: " + user.getPassword());
+        System.out.println("Match result: " + passwordEncoder.matches(password, user.getPassword()));
+
         // Check given password matches the hashed password in the db
-        // if (!passwordEncoder.matches(password, user.getPassword()))
-        if (!password.equals(user.getPassword()))
+        if (!passwordEncoder.matches(password, user.getPassword()))
         {
             return ResponseEntity.status(401).body("Invalid Password");
         }

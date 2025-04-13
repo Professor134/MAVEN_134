@@ -2,8 +2,6 @@ package in.starmaven.wealthwise.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import in.starmaven.wealthwise.repository.FamilyRepository;
 
 @Entity //it marks this class is database table
 @Table(name = "user")
@@ -46,17 +44,4 @@ public class User {
     @Column // This field is not stored in the database
     private String family_name;
 
-    // public void setPassword(String rawPassword) {
-    //     this.password = new BCryptPasswordEncoder().encode(rawPassword);
-    // }
-
-    // public boolean isPasswordMatch(String rawPassword) {
-    //     return new BCryptPasswordEncoder().matches(rawPassword, this.password);
-    // }
-
-    // public void setFamilyName (String family_name, FamilyRepository familyRepository)  {
-    //     this.family_name = family_name;
-    //     this.family = familyRepository.findByname(family_name).orElseThrow(() -> new RuntimeException("Family not found: " + family_name));
-    //     // this.family = foundFamily;
-    // }
 }

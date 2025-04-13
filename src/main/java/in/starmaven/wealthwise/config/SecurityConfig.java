@@ -2,7 +2,6 @@ package in.starmaven.wealthwise.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,16 +15,11 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")  // it use for API route allow CROS
-                        .allowedOrigins("http://localhost:5173")  // frontend port link
+                        .allowedOrigins("http://localhost:3000")  // frontend port link
                         .allowedMethods("GET", "POST", "PUT", "DELETE")  // allows this HTTP methods
                         .allowedHeaders("*")  // use to allow all headers and request from front end
                         .allowCredentials(true);  // it use send cookies for JWT
             }
         };
     }
-
-    // @Bean
-    // public BCryptPasswordEncoder passwordEncoder() {
-    //     return new BCryptPasswordEncoder();
-    // }
 }
