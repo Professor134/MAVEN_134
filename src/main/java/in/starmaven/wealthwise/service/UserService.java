@@ -4,7 +4,6 @@ import in.starmaven.wealthwise.entity.User;
 import in.starmaven.wealthwise.repository.UserRepository;
 import in.starmaven.wealthwise.entity.Family;
 import in.starmaven.wealthwise.repository.FamilyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-   @Autowired
     private final UserRepository userRepository;
     private final FamilyRepository familyRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -25,7 +23,7 @@ public class UserService {
     }
 
     public User registerUser(User user) {
-        Optional<Family> familyOptional = familyRepository.findByname(user.getFamily_name());
+        Optional<Family> familyOptional = familyRepository.findByName(user.getFamily_name());
         if (familyOptional.isPresent()) {
             user.setFamily(familyOptional.get());
         } else {

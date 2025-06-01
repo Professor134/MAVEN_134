@@ -14,7 +14,7 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {  
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("api/**")  // it use for API route allow CROS
+                registry.addMapping("/api/**")  // it use for API route allow CROS
                         .allowedOrigins("http://localhost:3000")  // frontend port link
                         .allowedMethods("GET", "POST", "PUT", "DELETE")  // allows this HTTP methods
                         .allowedHeaders("*")  // use to allow all headers and request from front end

@@ -1,4 +1,4 @@
-package in.starmaven.wealthwise.config;
+/*package in.starmaven.wealthwise.config;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -76,3 +76,4 @@ public class DatabaseConfig {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }
+    */

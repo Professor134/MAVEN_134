@@ -1,28 +1,27 @@
 package in.starmaven.wealthwise.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
+import jakarta.validation.constraints.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "family")
-@Getter
-@Setter
+
+@Document(collection = "family") //collection nme
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @ToString
 public class Family implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Field()
     private String name;
 
-    @Column(name = "status", nullable = false)
+    @Pattern(regexp = "ACTIVE|DEACTIVE", message = "Status must be ACTIVE or DEACTIVE")
     private String status = "Active";
 }
 

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
     private final JwtUtil jwtUtil;
@@ -34,12 +35,13 @@ public class AuthController {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.status(401).body("Invalid Credentials");
+            return ResponseEntity.status(401).body("Invalid login Credentials");
         }
 
         User user = userOptional.get();
 
         System.out.println("Raw password: " + password);
+        System.out.println("Raw password after encode: " + passwordEncoder.matches(password, user.getPassword()));
         System.out.println("Encoded password from DB: " + user.getPassword());
         System.out.println("Match result: " + passwordEncoder.matches(password, user.getPassword()));
 
