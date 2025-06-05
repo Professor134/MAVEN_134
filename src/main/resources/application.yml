@@ -27,7 +27,22 @@ spring:
         ddl-auto: Update
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
-  
+
+# # atomatic mail sending credential
+#   mail: 
+#     host: smtp.gmail.com
+#     port: 587
+#     email: wealthyfitness653@gmail.com
+#     # this is the email pssword in incripted format for application use only
+#     # https://myaccount.google.com/apppasswords use for incripting password
+#     password: srhqntxodwpwybwb
+#     properties: 
+#       mail: 
+#         smtp: 
+#           auth: true
+#           starttls:
+#             enable: true
+            
 logging.level.org.hibernate.SQL: DEBUG
 
 # JWT Secret Key (Used for Authentication)

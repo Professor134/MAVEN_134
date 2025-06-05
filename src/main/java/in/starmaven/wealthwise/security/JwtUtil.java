@@ -31,6 +31,15 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String generateResetToken(String email) {
+    return Jwts.builder()
+            .setSubject(email)
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000)) // 5 mins
+            .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+            .compact();
+}
+
     // Extract all claims
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
