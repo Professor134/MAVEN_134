@@ -1,7 +1,7 @@
 package in.starmaven.wealthwise.controller;
 
 import in.starmaven.wealthwise.security.JwtUtil;
-// import in.starmaven.wealthwise.service.EmailService;
+import in.starmaven.wealthwise.service.EmailService;
 import in.starmaven.wealthwise.entity.User;
 import in.starmaven.wealthwise.repository.UserRepository;
 import java.util.Collections;
@@ -23,13 +23,13 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    // private final EmailService emailService;
+    private final EmailService emailService;
 
-    public AuthController(JwtUtil jwtUtil, UserRepository userRepository/*,EmailService emailService */ ) {
+    public AuthController(JwtUtil jwtUtil, UserRepository userRepository,EmailService emailService ) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
-        // this.emailService = emailService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/login")
@@ -38,7 +38,6 @@ public class AuthController {
         String password = credentials.get("password");
 
         Optional<User> userOptional = userRepository.findByEmail(email);
-
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(401).body("Invalid login Credentials");
         }
@@ -80,19 +79,26 @@ public class AuthController {
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         System.out.println(email);
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email is required.");
+        }
  
         Optional<User> user = userRepository.findByEmail(email);
-        if (user == null) {
+        if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
         String token = jwtUtil.generateResetToken(email);
         String resetLink = "http://localhost:5173/reset?token=" + token;
 
-        // String body = "Hi, click the link below to reset your password:\n" + resetLink + "\nNote: This link will expire in 15 minutes.";
-        // emailService.sendEmail(email, "Password Reset", body);
-        // return ResponseEntity.ok("Reset link sent to your email");
-        return ResponseEntity.ok(Collections.singletonMap("resetLink", resetLink));
+        String body = "Hi, click the link below to reset your password:\n" + resetLink + "\nNote: This link will expire in 15 minutes.";
+        boolean sent = emailService.sendEmail(email, "Password Reset", body);
+            if (!sent) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send reset email. Please try again later.");
+            }
+        return ResponseEntity.ok("Reset link sent to your email"); 
+        
+        // return ResponseEntity.ok(Collections.singletonMap("resetLink", resetLink));
     }
 
     @PostMapping("/reset")
