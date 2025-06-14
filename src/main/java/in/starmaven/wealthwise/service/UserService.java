@@ -24,13 +24,17 @@ public class UserService {
 
     public User registerUser(User user) {
         Optional<Family> familyOptional = familyRepository.findByName(user.getFamily_name());
+        Family family;
         if (familyOptional.isPresent()) {
-            user.setFamily(familyOptional.get());
+            family = familyOptional.get();
         } else {
-            // Handle the case where the family is not found
-            throw new RuntimeException("Family not found: " + user.getFamily_name());
+            family = new Family();
+            family.setName(user.getFamily_name());
+            family.setStatus("ACTIVE"); // You can later make this dynamic
+            family = familyRepository.save(family); // Save new family
         }
-        
+        user.setFamily(family);
+
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email is already exist try other.....");
         }

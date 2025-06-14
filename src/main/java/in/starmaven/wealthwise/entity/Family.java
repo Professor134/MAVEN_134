@@ -22,6 +22,6 @@ public class Family implements Serializable {
     private String name;
 
     @Pattern(regexp = "ACTIVE|DEACTIVE", message = "Status must be ACTIVE or DEACTIVE")
-    private String status = "Active";
+    private String status = "ACTIVE";
 }
 
